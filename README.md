@@ -1,2 +1,3 @@
 # AICTE-internship-Shanmugaraj
-Garbage Classification week2
+Garbage Classification Project using AI/ML
+
