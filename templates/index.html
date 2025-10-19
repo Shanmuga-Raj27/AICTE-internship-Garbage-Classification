@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garbage Classification Project</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <h1 class="nav-title">♻️ Garbage Classification Project</h1>
+                <a href="/model" class="btn btn-primary">Try the Model</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Garbage Classification Project</h1>
+                    <p class="hero-description">
+                        An AI-powered system to classify waste materials and promote proper recycling
+                    </p>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">6</span>
+                            <span class="stat-label">Waste Categories</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">AI</span>
+                            <span class="stat-label">Powered Classification</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">99%</span>
+                            <span class="stat-label">Accuracy Rate</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about">
+            <div class="container">
+                <div class="section-header">
+                    <h2>About Garbage Classification</h2>
+                    <p class="section-subtitle">Understanding waste management through AI technology</p>
+                </div>
+                
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3>Why Garbage Classification Matters</h3>
+                        <p>
+                            Our world is changing, and we can help. Sorting garbage is a simple way to make things better. 
+                            When we recycle, we save our planet's resources. Every piece of trash we sort correctly helps 
+                            reduce pollution. Small actions by everyone can create a big positive change for our environment.
+                        </p>
+                        
+                        <h3>How AI Helps</h3>
+                        <p>
+                            Proper waste classification is crucial for effective recycling and environmental protection. 
+                            AI can help automate this process and educate people about correct waste sorting. Our machine 
+                            learning model uses EfficientNetV2B2 architecture to accurately classify waste materials 
+                            into six main categories.
+                        </p>
+                        
+                        <h3>Environmental Impact</h3>
+                        <p>
+                            By correctly sorting waste, we can significantly reduce landfill burden, conserve natural 
+                            resources, and minimize environmental pollution. Each correctly classified item contributes 
+                            to a more sustainable future for our planet.
+                        </p>
+                    </div>
+                    
+                    <div class="about-image">
+                        <div class="sustainability-card">
+                            <h4>🌱 Sustainability Benefits</h4>
+                            <ul>
+                                <li>Reduces landfill waste by 70%</li>
+                                <li>Conserves natural resources</li>
+                                <li>Decreases pollution levels</li>
+                                <li>Saves energy in production</li>
+                                <li>Creates recycling industry jobs</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Waste Categories Section -->
+        <section class="categories">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Waste Categories</h2>
+                    <p class="section-subtitle">Learn about the six main categories our AI can identify</p>
+                </div>
+                
+                <div class="categories-grid">
+                    {% for category in categories %}
+                    <div class="category-card">
+                        <div class="category-icon">{{ category.icon }}</div>
+                        <h3 class="category-name">{{ category.name }}</h3>
+                        <p class="category-description">{{ category.description }}</p>
+                        
+                        <div class="category-details">
+                            <h4>Examples:</h4>
+                            <ul class="category-examples">
+                                {% for example in category.examples %}
+                                <li>{{ example }}</li>
+                                {% endfor %}
+                            </ul>
+                            
+                            <div class="recyclable-status">
+                                {% if category.recyclable %}
+                                <span class="recyclable">♻️ Recyclable</span>
+                                {% else %}
+                                <span class="non-recyclable">🚫 Non-recyclable</span>
+                                {% endif %}
+                            </div>
+                            
+                            <p class="category-tips">
+                                <strong>Tip:</strong> {{ category.tips }}
+                            </p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="cta">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Ready to Try Our AI Model?</h2>
+                    <p>
+                        Upload an image of any waste item and let our AI classify it for you. 
+                        Help promote better waste management practices!
+                    </p>
+                    <a href="/model" class="btn btn-large btn-primary">
+                        🚀 Try the Model Now
+                    </a>
+                </div>
+                
+                <div class="cta-features">
+                    <div class="feature">
+                        <h4>⚡ Fast Processing</h4>
+                        <p>Get results in seconds</p>
+                    </div>
+                    <div class="feature">
+                        <h4>🎯 High Accuracy</h4>
+                        <p>99%+ classification accuracy</p>
+                    </div>
+                    <div class="feature">
+                        <h4>📱 Easy to Use</h4>
+                        <p>Simple upload and predict</p>
+                    </div>
+                    <div class="feature">
+                        <h4>🌍 Eco-Friendly</h4>
+                        <p>Promotes sustainability</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About This Project</h4>
+                    <p>
+                        Developed as part of an educational initiative to promote environmental awareness 
+                        and demonstrate the practical applications of machine learning in waste management.
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Technology Stack</h4>
+                    <ul>
+                        <li>EfficientNetV2B2 Model</li>
+                        <li>TensorFlow & Keras</li>
+                        <li>Flask Web Framework</li>
+                        <li>HTML5, CSS3, JavaScript</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Developer</h4>
+                    <p>
+                        Created by <strong>Shanmugaraj</strong><br>
+                        Computer Science Student<br>
+                        Tamil Nadu, India
+                    </p>
+                    <div class="social-links">
+                        <a href="https://github.com/Shanmuga-Raj27" target="_blank" title="GitHub">
+                            <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" width="20" height="20">
+                        </a>
+                        <a href="https://www.linkedin.com/in/shanmugaraj27/" target="_blank" title="LinkedIn">
+                            <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" width="20" height="20">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Garbage Classification Project. Built for educational purposes.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple JavaScript for enhanced user experience
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add smooth scrolling to internal links
+            const links = document.querySelectorAll('a[href^="#"]');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+            // Add animation to category cards on scroll
+            const categoryCards = document.querySelectorAll('.category-card');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+
+            categoryCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

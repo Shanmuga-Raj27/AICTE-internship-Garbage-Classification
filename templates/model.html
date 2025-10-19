@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Model Deployment - Garbage Classification</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <h1 class="nav-title">♻️ Waste Material Classifier</h1>
+                <a href="/" class="btn btn-secondary">← Back to Home</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section class="model-section">
+            <div class="container">
+                <div class="model-header">
+                    <h2>ML Model Deployment</h2>
+                    <p>Upload or capture an image and this AI model will classify it into one of six recyclable waste categories.</p>
+                </div>
+
+                <div class="model-interface">
+                    <!-- Left Side - Image Upload Box -->
+                    <div class="upload-section">
+                        <h3>📤 Upload Image</h3>
+                        
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-placeholder" id="uploadPlaceholder">
+                                <div class="upload-icon">📷</div>
+                                <h4>Choose or Drop an Image</h4>
+                                <p>Drag and drop an image here, or click to select</p>
+                                <p class="upload-formats">Supported: PNG, JPG, JPEG, GIF, BMP</p>
+                            </div>
+                            
+                            <div class="image-preview" id="imagePreview" style="display: none;">
+                                <img id="previewImg" src="" alt="Preview">
+                                <div class="image-overlay">
+                                    <button type="button" class="btn btn-small btn-danger" id="clearBtn">
+                                        🗑️ Clear
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form id="uploadForm" enctype="multipart/form-data">
+                            <input type="file" id="fileInput" name="file" accept="image/*" style="display: none;">
+                            <div class="upload-actions">
+                                <button type="button" class="btn btn-primary" id="selectBtn">
+                                    📁 Select File
+                                </button>
+                                <button type="submit" class="btn btn-success" id="predictBtn" disabled>
+                                    🔍 Predict
+                                </button>
+                            </div>
+                        </form>
+
+                        <div class="upload-tips">
+                            <h4>📋 Tips for Better Results:</h4>
+                            <ul>
+                                <li>Use clear, well-lit images</li>
+                                <li>Focus on single waste items</li>
+                                <li>Avoid blurry or dark photos</li>
+                                <li>Keep items centered in frame</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Right Side - Results Box -->
+                    <div class="results-section">
+                        <h3>🎯 Prediction Results</h3>
+                        
+                        <div class="results-area" id="resultsArea">
+                            <div class="results-placeholder" id="resultsPlaceholder">
+                                <div class="results-icon">🤖</div>
+                                <h4>AI Ready to Classify</h4>
+                                <p>Upload an image to see the classification results</p>
+                            </div>
+                            
+                            <div class="loading-state" id="loadingState" style="display: none;">
+                                <div class="loader"></div>
+                                <h4>Processing Image...</h4>
+                                <p>AI is analyzing your waste item</p>
+                            </div>
+                            
+                            <div class="prediction-results" id="predictionResults" style="display: none;">
+                                <div class="main-prediction">
+                                    <h4>Predicted Category:</h4>
+                                    <div class="prediction-display">
+                                        <span class="prediction-icon" id="predictionIcon">🤖</span>
+                                        <span class="prediction-class" id="predictionClass">-</span>
+                                        <span class="prediction-confidence" id="predictionConfidence">-</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="category-info" id="categoryInfo">
+                                    <div class="recyclable-status" id="recyclableStatus">
+                                        <span class="status-indicator">♻️</span>
+                                        <span class="status-text">Recyclable</span>
+                                    </div>
+                                    
+                                    <div class="category-details">
+                                        <h5>Examples:</h5>
+                                        <ul id="categoryExamples">
+                                            <li>Loading...</li>
+                                        </ul>
+                                        
+                                        <div class="category-tips">
+                                            <h5>💡 Recycling Tip:</h5>
+                                            <p id="categoryTip">Loading tip...</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="confidence-breakdown">
+                                    <h5>All Predictions:</h5>
+                                    <div class="confidence-bars" id="confidenceBars">
+                                        <!-- Confidence bars will be populated by JavaScript -->
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="error-state" id="errorState" style="display: none;">
+                                <div class="error-icon">❌</div>
+                                <h4>Prediction Error</h4>
+                                <p id="errorMessage">Something went wrong</p>
+                                <button type="button" class="btn btn-primary" id="retryBtn">Try Again</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Information Section -->
+                <div class="model-info">
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <h4>🧠 Model Architecture</h4>
+                            <p>Built with <strong>EfficientNetV2B2</strong>, a state-of-the-art convolutional neural network optimized for image classification tasks.</p>
+                        </div>
+                        
+                        <div class="info-card">
+                            <h4>📊 Performance Metrics</h4>
+                            <ul>
+                                <li><strong>Accuracy:</strong> 99%+</li>
+                                <li><strong>Categories:</strong> 6 waste types</li>
+                                <li><strong>Input Size:</strong> 224x224 pixels</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="info-card">
+                            <h4>🔧 Technical Details</h4>
+                            <ul>
+                                <li><strong>Framework:</strong> TensorFlow & Keras</li>
+                                <li><strong>Backend:</strong> Flask Python</li>
+                                <li><strong>Preprocessing:</strong> EfficientNet optimized</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div style="text-align: center; color: #b0b0b0; font-size: 14px;">
+                    <div style="display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; margin-bottom: 10px;">
+                        <div>Powered by EfficientNetV2</div>
+                        <div>Built with TensorFlow and Flask</div>
+                    </div>
+                    <div style="font-family: monospace;">
+                        Developed by Shanmugaraj<br>
+                        <a href="https://github.com/Shanmuga-Raj27" target="_blank" style="margin: 0 8px; display: inline-block;">
+                            <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" width="20" height="20" alt="GitHub" style="vertical-align: middle;">
+                        </a>
+                        <a href="https://www.linkedin.com/in/shanmugaraj27/" target="_blank" style="margin: 0 8px; display: inline-block;">
+                            <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" width="20" height="20" alt="LinkedIn" style="vertical-align: middle;">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Model page JavaScript for image upload and prediction
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM elements
+            const uploadArea = document.getElementById('uploadArea');
+            const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+            const imagePreview = document.getElementById('imagePreview');
+            const previewImg = document.getElementById('previewImg');
+            const fileInput = document.getElementById('fileInput');
+            const uploadForm = document.getElementById('uploadForm');
+            const selectBtn = document.getElementById('selectBtn');
+            const predictBtn = document.getElementById('predictBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            
+            // Result elements
+            const resultsPlaceholder = document.getElementById('resultsPlaceholder');
+            const loadingState = document.getElementById('loadingState');
+            const predictionResults = document.getElementById('predictionResults');
+            const errorState = document.getElementById('errorState');
+            
+            // File selection handlers
+            selectBtn.addEventListener('click', () => fileInput.click());
+            fileInput.addEventListener('change', handleFileSelect);
+            
+            // Drag and drop handlers
+            uploadArea.addEventListener('dragover', handleDragOver);
+            uploadArea.addEventListener('dragleave', handleDragLeave);
+            uploadArea.addEventListener('drop', handleDrop);
+            uploadArea.addEventListener('click', () => fileInput.click());
+            
+            // Form submission handler
+            uploadForm.addEventListener('submit', handleSubmit);
+            
+            // Clear button handler
+            clearBtn.addEventListener('click', clearImage);
+            
+            // Retry button handler
+            document.getElementById('retryBtn').addEventListener('click', clearImage);
+
+            function handleFileSelect(event) {
+                const file = event.target.files[0];
+                if (file && validateFile(file)) {
+                    displayImage(file);
+                }
+            }
+
+            function handleDragOver(event) {
+                event.preventDefault();
+                uploadArea.classList.add('drag-over');
+            }
+
+            function handleDragLeave() {
+                uploadArea.classList.remove('drag-over');
+            }
+
+            function handleDrop(event) {
+                event.preventDefault();
+                uploadArea.classList.remove('drag-over');
+                
+                const files = event.dataTransfer.files;
+                if (files.length > 0 && validateFile(files[0])) {
+                    fileInput.files = files;
+                    displayImage(files[0]);
+                }
+            }
+
+            function validateFile(file) {
+                const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/bmp'];
+                const maxSize = 16 * 1024 * 1024; // 16MB
+                
+                if (!allowedTypes.includes(file.type)) {
+                    showError('Invalid file type. Please upload PNG, JPG, JPEG, GIF, or BMP files only.');
+                    return false;
+                }
+                
+                if (file.size > maxSize) {
+                    showError('File too large. Please upload an image smaller than 16MB.');
+                    return false;
+                }
+                
+                return true;
+            }
+
+            function displayImage(file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    uploadPlaceholder.style.display = 'none';
+                    imagePreview.style.display = 'block';
+                    predictBtn.disabled = false;
+                };
+                reader.readAsDataURL(file);
+            }
+
+            function clearImage() {
+                fileInput.value = '';
+                uploadPlaceholder.style.display = 'block';
+                imagePreview.style.display = 'none';
+                predictBtn.disabled = true;
+                
+                // Reset results
+                showResultsPlaceholder();
+            }
+
+            function handleSubmit(event) {
+                event.preventDefault();
+                
+                if (!fileInput.files[0]) {
+                    showError('Please select an image first.');
+                    return;
+                }
+                
+                showLoading();
+                
+                const formData = new FormData();
+                formData.append('file', fileInput.files[0]);
+                
+                fetch('/predict', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showResults(data);
+                    } else {
+                        showError(data.error || 'Prediction failed');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showError('Network error. Please check your connection and try again.');
+                });
+            }
+
+            function showLoading() {
+                resultsPlaceholder.style.display = 'none';
+                predictionResults.style.display = 'none';
+                errorState.style.display = 'none';
+                loadingState.style.display = 'block';
+            }
+
+            function showResults(data) {
+                loadingState.style.display = 'none';
+                predictionResults.style.display = 'block';
+                
+                // Update main prediction
+                document.getElementById('predictionIcon').textContent = data.category_info.icon;
+                document.getElementById('predictionClass').textContent = data.prediction;
+                document.getElementById('predictionConfidence').textContent = data.confidence_percentage;
+                
+                // Update category info
+                const recyclableStatus = document.getElementById('recyclableStatus');
+                if (data.category_info.recyclable) {
+                    recyclableStatus.innerHTML = '<span class="status-indicator">♻️</span><span class="status-text">Recyclable</span>';
+                    recyclableStatus.className = 'recyclable-status recyclable';
+                } else {
+                    recyclableStatus.innerHTML = '<span class="status-indicator">🚫</span><span class="status-text">Non-recyclable</span>';
+                    recyclableStatus.className = 'recyclable-status non-recyclable';
+                }
+                
+                // Update examples
+                const examplesList = document.getElementById('categoryExamples');
+                examplesList.innerHTML = data.category_info.examples.map(example => `<li>${example}</li>`).join('');
+                
+                // Update tip
+                document.getElementById('categoryTip').textContent = data.category_info.tips;
+                
+                // Update confidence breakdown
+                const confidenceBars = document.getElementById('confidenceBars');
+                confidenceBars.innerHTML = data.all_predictions
+                    .sort((a, b) => b.confidence - a.confidence)
+                    .map(pred => `
+                        <div class="confidence-bar">
+                            <div class="confidence-label">
+                                <span class="class-name">${pred.class}</span>
+                                <span class="confidence-value">${pred.percentage}</span>
+                            </div>
+                            <div class="confidence-track">
+                                <div class="confidence-fill" style="width: ${(pred.confidence * 100).toFixed(1)}%"></div>
+                            </div>
+                        </div>
+                    `).join('');
+            }
+
+            function showError(message) {
+                loadingState.style.display = 'none';
+                predictionResults.style.display = 'none';
+                errorState.style.display = 'block';
+                document.getElementById('errorMessage').textContent = message;
+            }
+
+            function showResultsPlaceholder() {
+                loadingState.style.display = 'none';
+                predictionResults.style.display = 'none';
+                errorState.style.display = 'none';
+                resultsPlaceholder.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
