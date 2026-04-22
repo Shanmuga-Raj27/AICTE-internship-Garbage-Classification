@@ -8,7 +8,7 @@ const error = ref(null)
 
 onMounted(async () => {
   try {
-    const response = await fetch('http://localhost:8000/categories')
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/categories`)
     if (!response.ok) throw new Error('Failed to fetch categories')
     const data = await response.json()
     categories.value = data.categories
