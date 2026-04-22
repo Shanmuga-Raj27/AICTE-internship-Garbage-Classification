@@ -96,3 +96,8 @@ Garbage-Classification/
 **Shanmugaraj** *Aspiring Python Full Stack Developer | AI Enthusiast*
 
 > *“The greatest threat to our planet is the belief that someone else will save it.”* – Let's build a Green India together.
+
+🔗 **[LinkedIn](https://www.linkedin.com/in/shanmugaraj27)**
+🔗 **[GitHub](https://github.com/Shanmuga-Raj27)**
+
+
