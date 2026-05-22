@@ -1,103 +1,137 @@
-# Garbage Classification Using Transfer Learning (Modernized)
+# ♻️ AI-Powered Garbage Classifier & Waste Sorting Platform
 
-### 🌍 Vision: Towards a Green India
-India generates over 62 million tonnes of waste annually, but only about 20% is treated. Mismanagement of waste is a significant hurdle to the **Swachh Bharat (Clean India) Mission**. This project leverages Artificial Intelligence to automate the identification and classification of waste, empowering citizens and industries to sort garbage at the source—the first and most crucial step toward a sustainable, circular economy.
+An industry-grade, modernized, split-architecture full-stack deep learning application for automated garbage classification and waste management education. The system leverages state-of-the-art **Transfer Learning with EfficientNetV2B2** to classify waste items from images and provide actionable recycling tips to users.
 
 🔗 **[Live Demo: Garbage Classification Platform](https://garbage-classification-frontend.netlify.app/)**
 
 ---
 
-## 🚀 Project Overview
-This is a full-stack, AI-powered web application that identifies various types of waste in real-time. By utilizing **Transfer Learning**, the system achieves high accuracy with minimal computational overhead, making it viable for real-world environmental monitoring and educational awareness.
+## 🗺️ System Architecture
 
-### 🏗️ Split-Architecture Design
-To ensure high availability and professional-grade performance, the project follows a decoupled architecture:
-- **Scalable AI Backend**: A containerized FastAPI service hosted on **Hugging Face Spaces**, optimized with 16GB RAM to handle heavy Deep Learning workloads.
-- **Modern Responsive Frontend**: A sleek, mobile-first Vue 3 application hosted on **Netlify**, ensuring global delivery via CDN.
+The application is built on a clean, modern, decoupled microservice-style split architecture:
 
----
+```mermaid
+sequenceDiagram
+    actor User as "👤 User / Browser"
+    participant FE as "🖥️ React 19 SPA (Netlify)"
+    participant BE as "⚙️ FastAPI Backend (Docker/Hugging Face)"
+    participant TF as "🧠 TensorFlow (EfficientNetV2B2)"
 
-## 🛠️ Tech Stack
-
-### **Frontend**
-![Vue.js](https://img.shields.io/badge/vuejs-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D)
-![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
-
-### **Backend & AI**
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
-![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
-![TensorFlow](https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=tensorflow&logoColor=white)
-![Keras](https://img.shields.io/badge/Keras-%23D00000.svg?style=for-the-badge&logo=Keras&logoColor=white)
-
-### **Deployment & DevOps**
-![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
-![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-yellow?style=for-the-badge)
-![Netlify](https://img.shields.io/badge/netlify-%23000000.svg?style=for-the-badge&logo=netlify&logoColor=#00C7B7)
+    User->>FE: Upload Image or Take Live Photo (HTML5 Video Stream)
+    FE->>BE: POST /predict (Multipart Form File)
+    BE->>BE: Read file data & Validate headers (PNG, JPG, BMP, GIF)
+    BE->>BE: Resize (224x224x3) & Apply EfficientNetV2 Preprocessing
+    BE->>TF: Predict probabilities
+    TF-->>BE: [Class scores & probabilities]
+    BE->>BE: Map predicted index to waste metadata & tips
+    BE-->>FE: Return JSON Response with predictions & tips
+    FE-->>User: Beautiful dynamic dashboard with sorting tips & confidence metrics
+```
 
 ---
 
-## 🧠 Model Architecture
-The core intelligence of this system is based on **EfficientNetV2B2**, a state-of-the-art convolutional neural network optimized for accuracy and parameter efficiency.
+## 🌟 Key Features
 
-- **Transfer Learning**: Pre-trained weights from **ImageNet** were utilized to leverage high-level feature extraction.
-- **Fine-Tuning**: The top layers were specialized for waste-specific features.
-- **Classes**: `Cardboard`, `Glass`, `Metal`, `Paper`, `Plastic`, `Trash`.
+*   **🎨 Premium React 19 SPA**: Mobile-first user interface featuring gorgeous dark/light themes, smooth scrolling, micro-animations, and glassmorphic dashboards.
+*   **📸 Live Camera Shutter Capture**: Stream live camera video directly in the browser and capture waste items using a responsive native shutter trigger.
+*   **⚖️ Symmetrical Sizing Layout**: Workspace cards are strictly height-locked (`360px` on mobile, `440px` on desktop) to ensure elegant transitions with zero resizing shifting.
+*   **⚡ High Performance FastAPI Backend**: Asynchronous endpoints, CORS-enabled middleware, file safety checks, and EfficientNetV2B2 tensor scaling.
+*   **📂 Multi-channel Upload Options**: Drag-and-drop zone, standard browser file uploads, and a quick-test sandbox with realistic pre-configured image presets.
+
+---
+
+## 🧠 Model Specifications & Classes
+
+*   **Base Deep Learning Model**: EfficientNetV2B2 (Pre-trained on ImageNet with fine-tuned top layers).
+*   **Input Dimension**: `(224, 224, 3)` (RGB)
+*   **Loss & Training**: Optimizer-scheduled training tracking cross-entropy checkpoints (`best_model_finetuned224.keras`).
+
+### 📦 Supported Categories & Recycling Intelligence:
+
+| Icon | Category | Recyclable? | Example Waste Items | Actionable Disposal Tips |
+| :---: | :--- | :---: | :--- | :--- |
+| **📦** | **Cardboard** | ✅ Yes | Shipping boxes, cereal boxes, pizza boxes | Remove tape and flatten boxes. Clean cardboard recycles better. |
+| **🍶** | **Glass** | ✅ Yes | Wine bottles, mason jars, glass containers | Remove lids and rinse clean. Clear glass has the highest value. |
+| **🥫** | **Metal** | ✅ Yes | Aluminum cans, tin foil, metal containers | Rinse food residue. Aluminum recycles infinitely. |
+| **📄** | **Paper** | ✅ Yes | Newspapers, office paper, magazines | Keep paper dry and clean. Remove staples and plastic window envelopes. |
+| **🧴** | **Plastic** | ✅ Yes | Water bottles, plastic bags, food containers | Check recycling number. Clean containers and remove caps. |
+| **🗑️** | **Trash** | ❌ No | Food waste, contaminated items, mixed materials | Items too contaminated or made of mixed materials go to regular trash. |
 
 ---
 
 ## 📂 Project Structure
+
 ```text
 Garbage-Classification/
 ├── backend/                   # AI Service Engine (Python/FastAPI)
-│   ├── Dockerfile             # Containerization for HF Spaces
-│   ├── main.py                # FastAPI entry point & CORS config
+│   ├── main.py                # FastAPI endpoints & CORS config
 │   ├── model.py               # ML Logic & Inference pipeline
 │   ├── requirements.txt       # Production dependencies
 │   └── best_model_finetuned224.keras
-├── frontend/                  # User Interface (Vue 3/Vite)
+├── frontend/                  # React Single Page App (Vite / TSX)
 │   ├── src/
+│   │   ├── components/        # Theme & Layout modules (Navbar, Footer)
 │   │   ├── views/
-│   │   │   ├── Home.vue       # UX-optimized Landing Page
-│   │   │   └── Classifier.vue # Real-time AI Analysis View
+│   │   │   ├── Home.tsx       # UX-optimized Landing Page
+│   │   │   └── Classifier.tsx # Real-time AI Analysis & Live Camera View
+│   │   └── App.tsx            # Navigation & global Routing
+│   ├── public/                # Local public assets (Icons, images)
 │   ├── .env                   # Environment-driven API config
-│   └── vite.config.js
-└── README.md
+│   └── tsconfig.json          # TypeScript configurations
+├── Dockerfile                 # Root-level Docker build script (HF Spaces)
+├── netlify.toml               # Automatic Netlify deploy configurations
+└── README.md                  # Developer Documentation
 ```
-## ⚙️ Deployment Strategy
-
-### **Cloud Infrastructure (Production)**
-1.  **Backend (Hugging Face)**: Deployed using a custom **Docker** container. This bypasses standard RAM limits, allowing the TensorFlow model to run flawlessly on 16GB infrastructure.
-2.  **Frontend (Netlify)**: Automated CI/CD pipeline. The frontend communicates with the AI backend via the `VITE_API_URL` environment variable.
-
-### **Local Setup**
-1.  **Backend**:
-    ```bash
-    pip install -r backend/requirements.txt
-    uvicorn backend.main:app --reload --port 10000
-    ```
-2.  **Frontend**:
-    ```bash
-    npm install
-    npm run dev
-    ```
 
 ---
 
-## 💡 Key Engineering Features
-- **Mobile-First UX**: Designed for the "Thumb Zone," making it easy for users to snap and classify waste on the go.
-- **Environment Driven**: Fully decoupled frontend/backend connectivity via `.env` variables for seamless transition between dev and prod.
-- **Eco-Theming**: Implements a "Glassmorphism" UI with support for **Light and Dark modes**, emphasizing sustainability through modern design.
-- **Resource Optimized**: Leveraging Transfer Learning ensures fast inference times (~1.5s) even on CPU-only cloud servers.
+## ⚙️ Local Development & Setup
+
+### 🔌 Running the FastAPI Backend Locally
+1. Navigate to `backend/` and activate a virtual environment:
+   ```bash
+   cd backend
+   python -m venv .venv
+   # Windows:
+   .venv\Scripts\Activate.ps1
+   # macOS/Linux:
+   source .venv/bin/activate
+   ```
+2. Install Python dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Run the development server:
+   ```bash
+   uvicorn main:app --reload --port 8000
+   ```
+
+### 🖥️ Running the React Frontend Locally
+1. Navigate to `frontend/` and install node modules:
+   ```bash
+   cd frontend
+   npm install
+   ```
+2. Setup environment variable (create a `.env` file in `frontend/`):
+   ```env
+   VITE_API_URL=http://localhost:8000
+   ```
+3. Run the client application:
+   ```bash
+   npm run dev
+   ```
 
 ---
 
-## 👨‍💻 Developer
-**Shanmugaraj** *Aspiring Python Full Stack Developer | AI Enthusiast*
+## 🐳 Deployment & Cloud Integration
 
-> *“The greatest threat to our planet is the belief that someone else will save it.”* – Let's build a Green India together.
+*   **Backend (Hugging Face Spaces)**: Built automatically using the root-level [Dockerfile](Dockerfile) through the Hugging Face Docker SDK, running securely under non-root permissions on port `7860`.
+*   **Frontend (Netlify)**: Fully automated deployment via [netlify.toml](netlify.toml). Includes global SPA redirects (`/* -> /index.html 200`) preventing any router 404 page refresh issues.
 
-🔗 **[LinkedIn](https://www.linkedin.com/in/shanmugaraj27)**
-🔗 **[GitHub](https://github.com/Shanmuga-Raj27)**
+---
 
+## 👨‍💻 Developer & Team
+*   **Principal Developer**: **Shanmugaraj** (Aspiring Python Full Stack Developer | AI Enthusiast)
+*   **Co-Developer**: Developed in pair programming with **Antigravity (by Google DeepMind)**, implementing industry-standard methodologies for asynchronous APIs, Tailwind styling, and reactive interface bindings.
 
+*Helping clean the planet, one pixel at a time.* 🌍

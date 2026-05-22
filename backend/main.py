@@ -1,12 +1,35 @@
+# -------------------------------------------------------------
+# COMMANDS TO RUN BACKEND LOCALLY:
+#
+# 1. Open a terminal in the "backend" directory:
+#    cd backend
+#
+# 2. Activate the virtual environment (.venv):
+#    - In PowerShell:
+#      .\.venv\Scripts\Activate.ps1
+#    - In Command Prompt (CMD):
+#      .\.venv\Scripts\activate.bat
+#
+# 3. Start the FastAPI development server using uvicorn:
+#    uvicorn main:app --reload --port 8000
+# -------------------------------------------------------------
+
 import os
 import io
+import sys
 import numpy as np
 from PIL import Image
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from tensorflow.keras.models import load_model
-from tensorflow.keras.applications.efficientnet_v2 import preprocess_input
+from tensorflow.keras.applications.efficientnet_v2 import EfficientNetV2B2, preprocess_input
 from dotenv import load_dotenv
+
+# Set console encoding to UTF-8 to prevent UnicodeEncodeError in Windows environments
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8")
 
 # Load environment variables
 load_dotenv()
@@ -37,12 +60,12 @@ ALLOWED_CONTENT_TYPES = ['image/png', 'image/jpeg', 'image/gif', 'image/bmp']
 try:
     if os.path.exists(MODEL_PATH):
         model = load_model(MODEL_PATH)
-        print("✅ Model loaded successfully!")
+        print("[SUCCESS] Model loaded successfully!")
     else:
-        print(f"❌ Model file not found at {MODEL_PATH}")
+        print(f"[ERROR] Model file not found at {MODEL_PATH}")
         model = None
 except Exception as e:
-    print(f"❌ Error loading model: {e}")
+    print(f"[ERROR] Error loading model: {e}")
     model = None
 
 # Class labels matching the model
@@ -114,7 +137,7 @@ def preprocess_image(image: Image.Image) -> np.ndarray | None:
         if img_array.shape != (224, 224, 3):
             return None
         
-        # Apply EfficientNetV2 preprocessing
+        # Apply EfficientNetV2B2 preprocessing
         img_array = preprocess_input(img_array)
         img_array = np.expand_dims(img_array, axis=0)
         

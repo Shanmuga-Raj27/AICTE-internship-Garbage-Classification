@@ -1,0 +1,13 @@
+# Netlify configuration file for automatic frontend deployment
+# Base directory is "frontend", and build folder is "dist".
+# Redirects enable React Router SPA routing (preventing 404 on page refresh).
+
+[build]
+  base = "frontend"
+  publish = "dist"
+  command = "npm run build"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
