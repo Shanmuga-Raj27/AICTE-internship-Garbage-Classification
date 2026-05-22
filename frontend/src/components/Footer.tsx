@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="mt-auto border-t border-gray-200 dark:border-slate-800 bg-gray-50 dark:bg-[#0F141E] text-sm text-slate-700 dark:text-slate-400 font-sans transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
-          
+
           {/* Column 1: Brand & Mission */}
           <div className="lg:col-span-4 flex flex-col items-start pr-0 lg:pr-8">
             <Link to="/" className="text-xl font-bold text-[#0F172A] dark:text-[#F9FAFB] tracking-tight mb-4 font-display transition-colors duration-300">
@@ -32,8 +32,8 @@ export default function Footer() {
                 { name: 'API Documentation', href: '#' },
               ].map((link, idx) => (
                 <li key={idx}>
-                  <Link 
-                    to={link.href} 
+                  <Link
+                    to={link.href}
                     className="group inline-flex items-center text-slate-700 dark:text-slate-300 hover:text-[#059669] dark:hover:text-[#10B981] transition-all duration-300"
                   >
                     <span className="relative overflow-hidden group-hover:translate-x-2 transition-transform duration-300">
@@ -58,8 +58,8 @@ export default function Footer() {
                 const Icon = link.icon;
                 return (
                   <li key={idx}>
-                    <a 
-                      href="#" 
+                    <a
+                      href="#"
                       className="group inline-flex items-center gap-2 text-slate-700 dark:text-slate-300 hover:text-[#059669] dark:hover:text-[#10B981] transition-all duration-300"
                     >
                       <Icon className="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity" />
@@ -75,13 +75,13 @@ export default function Footer() {
           <div className="lg:col-span-3">
             <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-widest mb-6 border-b border-gray-200 dark:border-slate-800 pb-2 transition-colors duration-300">Connect</h4>
             <form className="mb-6 relative flex items-center group">
-              <input 
-                type="email" 
-                placeholder="Enter email for eco-updates" 
+              <input
+                type="email"
+                placeholder="Enter email for eco-updates"
                 className="w-full bg-white dark:bg-slate-800/40 border border-gray-200 dark:border-slate-700/50 rounded-lg py-2.5 px-4 text-sm text-[#0F172A] dark:text-[#F9FAFB] placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#10B981]/50 focus:ring-1 focus:ring-[#10B981]/50 transition-all pr-12"
               />
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 className="absolute right-2 p-1.5 text-gray-500 dark:text-slate-400 hover:text-[#059669] dark:hover:text-[#10B981] hover:bg-gray-100 dark:hover:bg-[#10B981]/10 rounded-md transition-colors"
                 aria-label="Subscribe"
               >
@@ -100,7 +100,7 @@ export default function Footer() {
               </a>
             </div>
           </div>
-          
+
         </div>
 
         {/* Bottom Copyright Bar */}
