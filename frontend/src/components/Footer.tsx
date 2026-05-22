@@ -1,4 +1,4 @@
-import { ArrowRight, Github, Linkedin, Globe, Cpu, Layers, Box, Rocket } from 'lucide-react';
+import { Github, Linkedin, Globe, Cpu, Layers, Box, Rocket } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Footer() {
@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
 
           {/* Column 1: Brand & Mission */}
-          <div className="lg:col-span-4 flex flex-col items-start pr-0 lg:pr-8">
+          <div className="lg:col-span-6 flex flex-col items-start pr-0 lg:pr-8">
             <Link to="/" className="text-xl font-bold text-[#0F172A] dark:text-[#F9FAFB] tracking-tight mb-4 font-display transition-colors duration-300">
               Garbage Classification Platform
             </Link>
@@ -21,45 +21,23 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Column 2: Platform Navigation */}
-          <div className="lg:col-span-2">
-            <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-widest mb-6 border-b border-gray-200 dark:border-slate-800 pb-2 transition-colors duration-300">Platform</h4>
-            <ul className="space-y-4">
-              {[
-                { name: 'AI Classifier', href: '/classify' },
-                { name: 'Supported Materials', href: '/#categories' },
-                { name: 'Impact Data', href: '#' },
-                { name: 'API Documentation', href: '#' },
-              ].map((link, idx) => (
-                <li key={idx}>
-                  <Link
-                    to={link.href}
-                    className="group inline-flex items-center text-slate-700 dark:text-slate-300 hover:text-[#059669] dark:hover:text-[#10B981] transition-all duration-300"
-                  >
-                    <span className="relative overflow-hidden group-hover:translate-x-2 transition-transform duration-300">
-                      {link.name}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Column 3: Engineering */}
+          {/* Column 2: Engineering */}
           <div className="lg:col-span-3">
             <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-widest mb-6 border-b border-gray-200 dark:border-slate-800 pb-2 transition-colors duration-300">Engineering</h4>
             <ul className="space-y-4">
               {[
-                { name: 'GitHub Repository', icon: Github },
-                { name: 'Hugging Face Space', icon: Rocket },
-                { name: 'Netlify Deployment', icon: Globe },
-                { name: 'Model Architecture', icon: Cpu },
+                { name: 'GitHub Repository', icon: Github, href: 'https://github.com/Shanmuga-Raj27/AICTE-internship-Garbage-Classification.git' },
+                { name: 'Hugging Face Space', icon: Rocket, href: 'https://huggingface.co' },
+                { name: 'Netlify Deployment', icon: Globe, href: 'https://www.netlify.com' },
+                { name: 'EfficientNetV2-B2 Model', icon: Cpu, href: 'https://keras.io/api/applications/efficientnet_v2/' },
               ].map((link, idx) => {
                 const Icon = link.icon;
                 return (
                   <li key={idx}>
                     <a
-                      href="#"
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="group inline-flex items-center gap-2 text-slate-700 dark:text-slate-300 hover:text-[#059669] dark:hover:text-[#10B981] transition-all duration-300"
                     >
                       <Icon className="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity" />
@@ -74,28 +52,29 @@ export default function Footer() {
           {/* Column 4: Collaboration / Connect */}
           <div className="lg:col-span-3">
             <h4 className="text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-widest mb-6 border-b border-gray-200 dark:border-slate-800 pb-2 transition-colors duration-300">Connect</h4>
-            <form className="mb-6 relative flex items-center group">
-              <input
-                type="email"
-                placeholder="Enter email for eco-updates"
-                className="w-full bg-white dark:bg-slate-800/40 border border-gray-200 dark:border-slate-700/50 rounded-lg py-2.5 px-4 text-sm text-[#0F172A] dark:text-[#F9FAFB] placeholder-gray-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#10B981]/50 focus:ring-1 focus:ring-[#10B981]/50 transition-all pr-12"
-              />
-              <button
-                type="submit"
-                className="absolute right-2 p-1.5 text-gray-500 dark:text-slate-400 hover:text-[#059669] dark:hover:text-[#10B981] hover:bg-gray-100 dark:hover:bg-[#10B981]/10 rounded-md transition-colors"
-                aria-label="Subscribe"
-              >
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </form>
             <div className="flex items-center gap-4">
-              <a href="#" className="w-9 h-9 rounded-full bg-white dark:bg-slate-800/50 border border-gray-200 dark:border-slate-700/50 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-[#059669] dark:hover:text-[#F9FAFB] hover:border-[#10B981]/50 transition-all hover:-translate-y-1">
+              <a
+                href="https://github.com/Shanmuga-Raj27/AICTE-internship-Garbage-Classification.git"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-white dark:bg-slate-800/50 border border-gray-200 dark:border-slate-700/50 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-[#059669] dark:hover:text-[#F9FAFB] hover:border-[#10B981]/50 transition-all hover:-translate-y-1"
+              >
                 <Github className="w-4 h-4" />
               </a>
-              <a href="#" className="w-9 h-9 rounded-full bg-white dark:bg-slate-800/50 border border-gray-200 dark:border-slate-700/50 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-[#059669] dark:hover:text-[#F9FAFB] hover:border-[#10B981]/50 transition-all hover:-translate-y-1">
+              <a
+                href="https://www.linkedin.com/in/shanmugaraj27"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-white dark:bg-slate-800/50 border border-gray-200 dark:border-slate-700/50 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-[#059669] dark:hover:text-[#F9FAFB] hover:border-[#10B981]/50 transition-all hover:-translate-y-1"
+              >
                 <Linkedin className="w-4 h-4" />
               </a>
-              <a href="#" className="w-9 h-9 rounded-full bg-white dark:bg-slate-800/50 border border-gray-200 dark:border-slate-700/50 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-[#059669] dark:hover:text-[#F9FAFB] hover:border-[#10B981]/50 transition-all hover:-translate-y-1">
+              <a
+                href="https://www.netlify.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-full bg-white dark:bg-slate-800/50 border border-gray-200 dark:border-slate-700/50 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:text-[#059669] dark:hover:text-[#F9FAFB] hover:border-[#10B981]/50 transition-all hover:-translate-y-1"
+              >
                 <Globe className="w-4 h-4" />
               </a>
             </div>
