@@ -1,0 +1,6 @@
+# Ignore python notebooks in backend deployment
+*.ipynb
+# Ignore local environment files
+.env
+.venv/
+__pycache__/
