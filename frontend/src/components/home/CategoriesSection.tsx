@@ -1,17 +1,42 @@
 import React, { useEffect, useState } from 'react';
-import { Package, Wine, Cog, Newspaper, ShoppingBag, Trash, ChevronDown } from 'lucide-react';
+import { Box, GlassWater, Wrench, Newspaper, ShoppingBag, Trash2, ChevronDown } from 'lucide-react';
 
 const LOCAL_CATEGORIES = [
-  { name: "Cardboard", description: "Boxes, packaging", icon: "Package", recyclable: true, tips: "Flatten before recycling." },
-  { name: "Glass", description: "Bottles, jars", icon: "Wine", recyclable: true, tips: "Rinse clean." },
-  { name: "Metal", description: "Cans, foil", icon: "Cog", recyclable: true, tips: "Rinse food out." },
+  { name: "Cardboard", description: "Boxes, packaging", icon: "Box", recyclable: true, tips: "Flatten before recycling." },
+  { name: "Glass", description: "Bottles, jars", icon: "GlassWater", recyclable: true, tips: "Rinse clean." },
+  { name: "Metal", description: "Cans, foil", icon: "Wrench", recyclable: true, tips: "Rinse food out." },
   { name: "Paper", description: "Newspapers", icon: "Newspaper", recyclable: true, tips: "Keep dry." },
   { name: "Plastic", description: "Bottles, bags", icon: "ShoppingBag", recyclable: true, tips: "Check recycle number." },
-  { name: "Trash", description: "Non-recyclable", icon: "Trash", recyclable: false, tips: "Goes to landfill." }
+  { name: "Trash", description: "Non-recyclable", icon: "Trash2", recyclable: false, tips: "Goes to landfill." }
 ];
 
 const ICON_MAP: Record<string, React.ElementType> = {
-  Package, Wine, Cog, Newspaper, ShoppingBag, Trash
+  // Primary name mapping (case-sensitive matching for local & API names)
+  "Cardboard": Box,
+  "Glass": GlassWater,
+  "Metal": Wrench,
+  "Paper": Newspaper,
+  "Plastic": ShoppingBag,
+  "Trash": Trash2,
+
+  // Unicode Emoji mapping returned from Hugging Face Space API
+  "📦": Box,
+  "🍶": GlassWater,
+  "🥫": Wrench,
+  "📄": Newspaper,
+  "🧴": ShoppingBag,
+  "🗑️": Trash2,
+
+  // Fallback compatibility string mapping
+  "Box": Box,
+  "Package": Box,
+  "GlassWater": GlassWater,
+  "Wine": GlassWater,
+  "Wrench": Wrench,
+  "Cog": Wrench,
+  "Newspaper": Newspaper,
+  "ShoppingBag": ShoppingBag,
+  "Trash2": Trash2
 };
 
 export default function CategoriesSection() {
@@ -73,7 +98,7 @@ export default function CategoriesSection() {
             ))
           ) : (
             categories.map((cat, idx) => {
-              const Icon = ICON_MAP[cat.icon] || Package;
+              const Icon = ICON_MAP[cat.name] || ICON_MAP[cat.icon] || Box;
               const isExpanded = expandedId === idx;
               return (
                 <div 
