@@ -162,7 +162,7 @@ Our decoupled architecture allows both components to be hosted independently on 
 ## 👤 Developer Profile
 
 ### **Shanmugaraj R**
-* **Role:** Aspiring Python Full Stack Developer | AI Enthusiast
+* **Role:** Aspiring Python backend Developer | AI Enthusiast
 * **Focus:** Crafting reliable web architectures, building and deploying containerized machine learning microservices, and design-minded front-end systems with rich, user-centric interfaces.
 
 ---
